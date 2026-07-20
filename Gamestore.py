@@ -31,6 +31,8 @@ class estoque:
         while True:
             try:
                 preco = float(input("Digite o preço do jogo: "))
+                if preco < 0:
+                    preco = 0
                 break
             except ValueError:
                     print("Erro: Digite um valor numérico válido!")
@@ -39,6 +41,8 @@ class estoque:
         while True:
             try:
                 quantidade = int(input("Digite a quantidade: "))
+                if quantidade < 0:
+                    quantidade = 0
                 break
             except ValueError:
                     print("Erro: Digite um valor numérico inteiro válido!")
@@ -75,6 +79,19 @@ class estoque:
                 print("Erro: Digite um valor numérico inteiro válido!")
             except IndexError:
                 print(f"Erro: Digite o numero de uma lista existente! (Escolha entre 0 e {len(self.lista_jogos)-1})")
+    def busca(self):
+        if len(self.lista_jogos) == 0:
+            print("\nO estoque está totalmente vazio! Cadastre jogos antes de buscar.")
+            return None
+        nome_procurado = input("Digite o nome do jogo que você procura: ")
+        for linha, jogo in enumerate(self.lista_jogos):
+            if jogo.nome.lower() == nome_procurado.lower():
+                print("\nSeu jogo está na lista!\n")
+                print(f"Nome: {jogo.nome} | Preço: R${jogo.preco:.2f} | Estoque: {jogo.quantidade} | Linha: {linha}")
+                return jogo
+        print(f"O jogo {nome_procurado} não está na lista")ws
+        return None
+
 meu_estoque = estoque()
 while True:
     print("\n=== 🎮 GAME STORE MANAGEMENT ===")
@@ -82,10 +99,11 @@ while True:
     print("2. Listar Estoque")
     print("3. Atualizar Quantidade")
     print("4. Remover Jogo")
-    print("5. Sair do Programa")
+    print("5. Buscar Jogo")
+    print("6. Sair do Programa")
     print("================================")
 
-    opcao = input("Escolha uma opção (1-5): ")
+    opcao = input("Escolha uma opção (1-6): ")
 
     if opcao == "1":
         meu_estoque.adicionar()
@@ -96,5 +114,7 @@ while True:
     if opcao == "4":
         meu_estoque.remover()
     if opcao == "5":
+        meu_estoque.busca()
+    if opcao == "6":
         print("Até breve!")
         break
